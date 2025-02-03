@@ -56,7 +56,7 @@ jobs:
             fail_build: false
         - uses: actions/upload-artifact@v4
           with:
-            name: Veracode Pipeline-Scan Results
+            name: VeracodeResults
             path: results.json 
 
   veracode-fix:
