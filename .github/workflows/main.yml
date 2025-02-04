@@ -46,7 +46,7 @@ jobs:
             name: verademo.war
         - name: pipeline-scan action step
           id: pipelien-scan
-          uses: veracode/Veracode-pipeline-scan-action@esd-true
+          uses: veracode/Veracode-pipeline-scan-action@v1.0.18
           with:
             vid: ${{ secrets.VID }}
             vkey: ${{ secrets.VKEY }}
@@ -83,6 +83,7 @@ jobs:
           source_base_path_2: "WEB-INF:app/src/main/webapp/WEB-INF"
           language: java
           prComment: true
+          createPR: true
           DEBUG: true
-          fixType: single
+          fixType: batch
           files: changed
