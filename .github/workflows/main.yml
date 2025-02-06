@@ -51,7 +51,7 @@ jobs:
             vid: ${{ secrets.VID }}
             vkey: ${{ secrets.VKEY }}
             file: "verademo.war" 
-            request_policy: "Veracode Recommended SCA Very Low"
+            request_policy: "VeraDemo Policy"
             debug: 1
             fail_build: false
         - uses: actions/upload-artifact@v4
