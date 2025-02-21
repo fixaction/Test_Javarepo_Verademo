@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 public class IgnoreCommand implements BlabberCommand {
 	private static final Logger logger = LogManager.getLogger("VeraDemo:IgnoreCommand");
@@ -36,15 +37,18 @@ public class IgnoreCommand implements BlabberCommand {
 
 			sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'";
 			Statement sqlStatement = connect.createStatement();
-			logger.info(sqlQuery);
+			logger.info(StringUtils.normalizeSpace(sqlQuery));
 			ResultSet result = sqlStatement.executeQuery(sqlQuery);
 			result.next();
 
 			/* START EXAMPLE VULNERABILITY */
-			String event = username + " is now ignoring " + blabberUsername + " (" + result.getString(1) + ")";
-			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + username + "\", \"" + event + "\")";
-			logger.info(sqlQuery);
-			sqlStatement.execute(sqlQuery);
+			String event = username + " is now ignoring " + result.getString(1) + " (" + result.getString(1) + ")";
+			sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (?,?)";
+			sqlStatement2 = connect.prepareStatement(sqlQuery);
+			sqlStatement2.setString(1, username);
+			sqlStatement2.setString(2, event);
+			logger.info(StringUtils.normalizeSpace(sqlQuery));
+			sqlStatement2.execute();
 			/* END EXAMPLE VULNERABILITY */
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
